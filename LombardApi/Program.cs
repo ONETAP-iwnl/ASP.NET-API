@@ -1,4 +1,6 @@
 
+using LombardApi.Services;
+
 namespace LombardApi
 {
     public class Program
@@ -7,6 +9,7 @@ namespace LombardApi
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
+            builder.Services.AddSingleton<ILombardService, LombardService>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();

@@ -4,7 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace LombardApi.Services
 {
-    public class LombardService //CRUD 
+    public class LombardService : ILombardService //CRUD 
     {
         private LombardContext _context;
 
@@ -13,17 +13,23 @@ namespace LombardApi.Services
             _context = new LombardContext();
         }
 
-        internal async Task AddClient(Client client)
+        public async Task AddClient(Client client)
         {
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
         }
 
-        internal async Task<IEnumerable<Client>> GetClients() => await _context.Clients.ToListAsync();
+        public async Task AddEmployee(Employees employees)
+        {
+            _context.Employees.Add(employees);
+            await _context.SaveChangesAsync();
+        }
 
-        internal async Task<IEnumerable<Employees>> GetEmployees() => await _context.Employees.ToListAsync();
+        public async Task<IEnumerable<Client>> GetClients() => await _context.Clients.ToListAsync();
 
-        internal async Task UpdateClient(Guid clientId, Client newData)
+        public async Task<IEnumerable<Employees>> GetEmployees() => await _context.Employees.ToListAsync();
+
+        public async Task UpdateClient(Guid clientId, Client newData)
         {
             var existingClient = await _context.Clients.FindAsync(clientId);
             if (existingClient != null)
@@ -37,7 +43,7 @@ namespace LombardApi.Services
             }
         }
 
-        internal async Task UpdateEmployee(Guid employeesId, Employees newData)
+        public async Task UpdateEmployee(Guid employeesId, Employees newData)
         {
             var existingEmployee = await _context.Employees.FindAsync(employeesId);
             if (existingEmployee != null)
